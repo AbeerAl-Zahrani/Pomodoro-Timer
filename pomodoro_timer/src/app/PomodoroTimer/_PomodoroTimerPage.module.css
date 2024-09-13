@@ -1,0 +1,41 @@
+.parent{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.div {
+    box-shadow:0px 3px rgb(192, 191, 191);
+    height: 600px;
+    width: 700px;
+    background-color: #ffffff;
+}
+.pomodoroBtns{
+   display: flex;
+   flex-direction: column;
+   /* justify-content: center; */
+   margin-left: 40px;
+   margin-top: 40px;
+   width: 600px;
+gap: 20px;
+font-size: 1.4rem;
+   }
+   .tabs{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: #f2f0f0;
+    height: 60px;
+   }
+   .active{
+    color: #ff6e4e;
+
+   }
+  .timer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+  }
