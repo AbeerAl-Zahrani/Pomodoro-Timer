@@ -9,14 +9,24 @@ datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
+model User {
+id Int @id @default(autoincrement())
+timer CustomTimer[]
+tasks Task[]
 
+}
 model CustomTimer {
-  id String @id @default(uuid())
+  id Int @id @default(autoincrement())
   timer Int
   longBreakTimer Int
   shortBreakTimer Int
-  tasks Task[]
+  userId Int
+  User User @relation(fields:[userId],references:[id], onDelete: Cascade)
 }
 model Task {
+  id Int @id @default(autoincrement())
   task String
+  userId Int
+  User User @relation(fields:[userId],references:[id], onDelete: Cascade)
+  createdAt DateTime @default(now())
 }

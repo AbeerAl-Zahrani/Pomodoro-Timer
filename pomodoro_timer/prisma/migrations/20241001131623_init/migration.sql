@@ -1,0 +1,23 @@
+-- CreateTable
+CREATE TABLE "User" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT
+);
+
+-- CreateTable
+CREATE TABLE "CustomTimer" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "timer" INTEGER NOT NULL,
+    "longBreakTimer" INTEGER NOT NULL,
+    "shortBreakTimer" INTEGER NOT NULL,
+    "userId" INTEGER NOT NULL,
+    CONSTRAINT "CustomTimer_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+-- CreateTable
+CREATE TABLE "Task" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "task" TEXT NOT NULL,
+    "userId" INTEGER NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "Task_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE CASCADE ON UPDATE CASCADE
+);
