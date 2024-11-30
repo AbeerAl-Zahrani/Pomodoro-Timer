@@ -1,11 +1,16 @@
-import { useState } from "react"
+// import { Dispatch, SetStateAction } from "react"
+
 interface LongBreakTimeProps {
-    seconds: string
+    seconds: number,
+    longBreakTime:number,
+    // setLongBreakTime:Dispatch<SetStateAction<number>>
 }
-export default function LongBreakTime({seconds}:LongBreakTimeProps){
-    const [longBreakTime,setLongBreakTime] = useState<number>(10)
+export default function LongBreakTime({seconds,longBreakTime}:LongBreakTimeProps){
 
     return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-    <h3 style={{ fontSize: '5rem' }}> <input type="text" value={longBreakTime} onChange={(e) => setLongBreakTime(Number(e.target.value))}/>{seconds} </h3>
+    <h3 style={{ fontSize: '5rem' }}> 
+        {/* <input type="text" value={longBreakTime} onChange={(e) => setLongBreakTime(Number(e.target.value))}/> */}
+       {longBreakTime}:{seconds} 
+        </h3>
     </div>
 }

@@ -1,11 +1,16 @@
-import { useState } from "react"
+// import { Dispatch, SetStateAction } from "react"
+
 interface ShortBreakTimeProps {
-    seconds: string
+    seconds: number,
+    shortBreakTime:number,
+    // setShortBreakTime:Dispatch<SetStateAction<number>>
 }
-export default function ShortBreakTime({seconds}:ShortBreakTimeProps){
-    const [shortBreakTime,setShortBreakTime] = useState<number>(5)
+export default function ShortBreakTime({seconds,shortBreakTime}:ShortBreakTimeProps){
 
     return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-    <h3 style={{ fontSize: '5rem' }}> <input type="text" value={shortBreakTime} onChange={(e) => setShortBreakTime(Number(e.target.value))}/>{seconds} </h3>
+    <h3 style={{ fontSize: '5rem' }}> 
+        {/* <input type="text" value={shortBreakTime} onChange={(e) => setShortBreakTime(Number(e.target.value))}/> */}
+    {shortBreakTime}:{seconds}
+     </h3>
     </div>
 }
