@@ -7,10 +7,9 @@ interface ShortBreakTimeProps {
 }
 export default function ShortBreakTime({seconds,shortBreakTime}:ShortBreakTimeProps){
 
-    return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-    <h3 style={{ fontSize: '5rem' }}> 
+    return <span style={{ fontSize: '10rem', color: '#ded7d3' }}>
         {/* <input type="text" value={shortBreakTime} onChange={(e) => setShortBreakTime(Number(e.target.value))}/> */}
-    {shortBreakTime}:{seconds}
-     </h3>
-    </div>
+    {shortBreakTime}:{seconds || '00'}
+     </span>
+    
 }

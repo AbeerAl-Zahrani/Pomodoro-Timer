@@ -7,10 +7,8 @@ interface LongBreakTimeProps {
 }
 export default function LongBreakTime({seconds,longBreakTime}:LongBreakTimeProps){
 
-    return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-    <h3 style={{ fontSize: '5rem' }}> 
+    return <span style={{ fontSize: '10rem', color: '#ded7d3' }}>
         {/* <input type="text" value={longBreakTime} onChange={(e) => setLongBreakTime(Number(e.target.value))}/> */}
-       {longBreakTime}:{seconds} 
-        </h3>
-    </div>
+       {longBreakTime}:{seconds || '00'} 
+        </span>
 }

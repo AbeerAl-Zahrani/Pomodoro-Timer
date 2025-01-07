@@ -9,12 +9,11 @@ interface WorkTimeProps {
 // type ChangeEvent = React.ChangeEvent<HTMLInputElement>
 export default function WorkTime({ seconds, workTime }: WorkTimeProps) {
 
-    return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <h3 style={{ fontSize: '5rem' }}>
-            {/* <input type="text" value={workTime} onChange={(e: ChangeEvent) => {
+    return <span style={{ fontSize: '10rem', color: '#ded7d3' }}>
+        {/* <input type="text" value={workTime} onChange={(e: ChangeEvent) => {
 
             setWorkTime(Number(e.target.value))
         }} />  */}
-            {workTime}:{seconds}</h3>
-    </div>
+        {workTime}:{seconds || '00'}</span>
+
 }

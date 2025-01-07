@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CustomTimerButton from "./_components/CustomTimerButton";
 import styles from './_PomodoroTimerPage.module.css'
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
@@ -11,11 +11,17 @@ export default function PomodoroTimerPage() {
     const [activeTab, setActiveTab] = useState<string>('Pomodoro')
     const [shortBreakTime, setShortBreakTime] = useState<number>(5)
     const [longBreakTime, setLongBreakTime] = useState<number>(10)
-    const [workTime, setWorkTime] = useState<number>(2)
+    const [workTime, setWorkTime] = useState<number>(20)
     const [minutes, setMinutes] = useState<number>(workTime)
-    const [seconds, setSeconds] = useState<number>(0)
-    const pomodoroTabs = [{ label: 'Pomodoro', value: 2 }, { label: 'Short Break', value: 5 }, { label: 'Long Break', value: 10 }]
-
+    const [seconds, setSeconds] = useState<number>()
+    const [activeList, setActiveList] = useState<string>()
+    const pomodoroTabs = [{ label: 'Pomodoro', value: 20 }, { label: 'Short Break', value: 5 }, { label: 'Long Break', value: 10 }]
+    const lists :string[] = [
+        'Profile',
+        'Customize',
+        'Add task',
+        'Finished tasks'
+    ]
     //start timer 
     function start() {
         // console.log('in start fun');
@@ -55,13 +61,21 @@ export default function PomodoroTimerPage() {
     // useEffect(() => {
 
     // }, [activeTab])
+
     return <div className={styles.parent}>
+        <div>
+
+            <ul className={styles.listStyle}>
+                {lists.map((list, i) => (
+
+                     <li key={i} className={list == activeList ? styles.activeList : undefined} onClick={() => setActiveList(list)}>{list}</li>
+                ))}
+
+            </ul>
+        </div>
         <div className={styles.div}>
             <div className={styles.pomodoroBtns}>
-                <div>
 
-                    <CustomTimerButton />
-                </div>
                 <div className={styles.tabs}>
                     {pomodoroTabs.map((tab, i) => (
                         <div key={i} className={activeTab === tab.label ? styles.active : undefined} onClick={() => {
@@ -80,9 +94,13 @@ export default function PomodoroTimerPage() {
                 <LongBreakTime seconds={seconds} longBreakTime={minutes} />
             ) : <></>}
             <div className={styles.timer}>
-                <div style={{ borderRadius: '50px', cursor: 'pointer', backgroundColor: '#f4f4f4', width: '50px', height: '50px', display: 'flex', justifyContent: 'center', alignItems: 'center' }} onClick={() => start()}><PlayArrowIcon fontSize="large" /></div>
-                <div style={{ borderRadius: '50px', cursor: 'pointer', backgroundColor: '#f4f4f4', width: '50px', height: '50px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}><PauseIcon fontSize="large" /></div>
+                {/* <div style={{ cursor: 'pointer',  display: 'flex', justifyContent: 'center', alignItems: 'center' }} }><PlayArrowIcon fontSize="large" /></div>
+                <div style={{  cursor: 'pointer',  display: 'flex', justifyContent: 'center', alignItems: 'center' }}><PauseIcon fontSize="large" /></div> */}
+                <button className={styles.button} onClick={() => start()}>
+                    START
+                </button>
             </div>
         </div>
     </div>
+
 }
