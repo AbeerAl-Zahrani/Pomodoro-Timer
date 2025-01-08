@@ -14,6 +14,6 @@ export default function WorkTime({ seconds, workTime }: WorkTimeProps) {
 
             setWorkTime(Number(e.target.value))
         }} />  */}
-        {workTime}:{seconds || '00'}</span>
+        {workTime}:{seconds < 10 ? `0${seconds}` : seconds}</span>
 
 }
