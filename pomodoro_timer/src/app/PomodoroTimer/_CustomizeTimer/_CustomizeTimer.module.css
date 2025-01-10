@@ -1,0 +1,24 @@
+.input {
+    font-family: 'Arial', sans-serif;
+    font-size: 120px;
+    color: #f3f3f3;
+    background: none;
+    border: none;
+    text-align: center;
+    width: 300px;
+  }
+  
+  .input:focus {
+    outline: none;
+  }
+  
+  .input::-webkit-outer-spin-button,
+  .input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  
+  .input[type="number"] {
+    -moz-appearance: textfield;
+  }
+  

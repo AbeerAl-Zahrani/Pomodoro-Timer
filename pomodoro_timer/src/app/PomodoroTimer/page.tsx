@@ -1,9 +1,6 @@
 'use client'
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import CustomTimerButton from "./_components/CustomTimerButton";
+import { useCallback, useEffect, useRef, useState } from "react";
 import styles from './_PomodoroTimerPage.module.css'
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import PauseIcon from '@mui/icons-material/Pause';
 import WorkTime from "./_pomodoroTpas/WorkTime";
 import ShortBreakTime from "./_pomodoroTpas/ShortBreakTime";
 import LongBreakTime from "./_pomodoroTpas/LongBreakTime";
@@ -15,7 +12,7 @@ export default function PomodoroTimerPage() {
     const [workTime, setWorkTime] = useState<number>(20)
     const [minutes, setMinutes] = useState<number>(0)
     const [seconds, setSeconds] = useState<number>(0)
-    const [activeList, setActiveList] = useState<string>()
+    const [activeList, setActiveList] = useState<string>('')
     const [pomodoroStatus, setPomodoroStatus] = useState<string>('START')
     const pomodoroTabs = [{ label: 'Pomodoro', value: 20 }, { label: 'Short Break', value: 5 }, { label: 'Long Break', value: 10 }]
     const lists: string[] = [
@@ -24,7 +21,7 @@ export default function PomodoroTimerPage() {
         'Add task',
         'Finished tasks'
     ]
-    const getInitialMinutes = (activeTab: string, workTime: number, shortBreakTime: number, longBreakTime: number): number => {
+    const getInitialMinutes = (activeTab: string): number => {
         switch (activeTab) {
             case 'Pomodoro':
                 return workTime - 1;
@@ -36,7 +33,6 @@ export default function PomodoroTimerPage() {
                 return workTime - 1; // Default to work time
         }
     };
-    console.log(minutes);
 
     //start timer 
     const start = useCallback(() => {
@@ -45,12 +41,10 @@ export default function PomodoroTimerPage() {
         console.log('Starting timer...');
         setPomodoroStatus('RUNNING');
         let _seconds = seconds || 59
-        console.log(minutes);
+        console.log(workTime);
 
-        let _minutes: number = minutes || getInitialMinutes(activeTab, workTime, shortBreakTime, longBreakTime);
-        // const breakMinutes: number = shortBreakTime - 1
-        // let breakCount = 0
-        console.log(_minutes);
+        let _minutes: number = minutes || getInitialMinutes(activeTab);
+
 
         const timerFunction = () => {
             // console.log('in countdown fun');
@@ -59,18 +53,15 @@ export default function PomodoroTimerPage() {
             if (_seconds === 0) {
                 _minutes = _minutes - 1
                 if (_minutes === -1) {
-                    // if (breakCount % 2 === 0) {
-                    //     _minutes = breakMinutes
-                    //     breakCount++
-                    // } else {
-                    _minutes = 0
-                    // breakCount++
-                    // }
+                    clearInterval(timerRef.current!);
+                    setPomodoroStatus('STOPPED');
+                    return;
+
+
                 }
                 _seconds = 59
             }
-            // console.log('minutes', minutes);
-            // console.log('_seconds', _seconds);
+
             setMinutes(_minutes)
             setSeconds(_seconds)
         }
@@ -79,7 +70,7 @@ export default function PomodoroTimerPage() {
 
 
 
-    }, [pomodoroStatus, minutes, seconds, activeTab, workTime, shortBreakTime, longBreakTime]);
+    }, [pomodoroStatus, minutes, seconds, activeTab, workTime]);
     // Pause the timer
     const pause = useCallback(() => {
         console.log('Pausing timer...');
@@ -101,7 +92,7 @@ export default function PomodoroTimerPage() {
         setMinutes(activeTab === 'Pomodoro' ? workTime : activeTab === 'Short Break' ? shortBreakTime : longBreakTime); // Reset to default work time
         setSeconds(0);
         setPomodoroStatus('START')
-    }, [activeTab]);
+    }, [activeTab, workTime, longBreakTime, shortBreakTime]);
 
     // Resume the timer
     const resume = useCallback(() => {
@@ -135,32 +126,34 @@ export default function PomodoroTimerPage() {
                     {pomodoroTabs.map((tab, i) => (
                         <div key={i} className={activeTab === tab.label ? styles.active : undefined} onClick={() => {
                             setActiveTab(tab.label)
-                            // setMinutes(tab.value)
                         }}>{tab.label}</div>
                     ))}
 
                 </div>
             </div>
             {activeTab === 'Pomodoro' ? (
-                <WorkTime seconds={seconds} workTime={minutes || workTime} />
+                <WorkTime seconds={seconds} workTime={minutes || workTime} activeList={activeList} setWorkTime={setWorkTime} />
             ) : activeTab === 'Short Break' ? (
-                <ShortBreakTime seconds={seconds} shortBreakTime={minutes || shortBreakTime} />
+                <ShortBreakTime seconds={seconds} shortBreakTime={minutes || shortBreakTime} activeList={activeList} setShortBreakTime={setShortBreakTime} />
             ) : activeTab === 'Long Break' ? (
-                <LongBreakTime seconds={seconds} longBreakTime={minutes || longBreakTime} />
+                <LongBreakTime seconds={seconds} longBreakTime={minutes || longBreakTime} activeList={activeList} setLongBreakTime={setLongBreakTime} />
             ) : <></>}
-            <div className={styles.timer}>
-                {pomodoroStatus === 'START' && <button className={styles.button} onClick={start}>Start</button>}
-                {pomodoroStatus === 'RUNNING' &&
-                    <>
-                        <button className={styles.button} onClick={pause}>Pause</button>
-                        <button className={styles.button} onClick={stop}>Stop</button>
-                    </>
+            {activeList !== 'Customize' ? (
+                <div className={styles.timer}>
+                    {pomodoroStatus === 'START' && <button className={styles.button} onClick={start}>Start</button>}
+                    {pomodoroStatus === 'RUNNING' &&
+                        <>
+                            <button className={styles.button} onClick={pause}>Pause</button>
+                            <button className={styles.button} onClick={stop}>Stop</button>
+                        </>
 
-                }
-                {pomodoroStatus === 'PAUSED' && <button className={styles.button} onClick={resume}>Resume</button>}
+                    }
+                    {pomodoroStatus === 'PAUSED' && <button className={styles.button} onClick={resume}>Resume</button>}
 
 
-            </div>
+                </div>
+            ) : <></>}
+
         </div>
     </div>
 
